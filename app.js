@@ -407,6 +407,10 @@ module.exports = class Heimdall extends Homey.App {
 
         zones = await this.homeyApi.zones.getZones();
 
+        this.homeyApi.zones.on('zone.create', zone => { zones[zone.id] = zone; });
+        this.homeyApi.zones.on('zone.update', zone => { zones[zone.id] = zone; });
+        this.homeyApi.zones.on('zone.delete', ({ id }) => { delete zones[id]; });
+
         this.log('Connecting webapi:          done')
     }
 
@@ -632,8 +636,10 @@ module.exports = class Heimdall extends Homey.App {
     */
 
     async getZoneName(zoneId) {
-        const allZones = await this.getZones();
-        return allZones[zoneId]?.name ?? 'Unknown Zone';
+        if (Object.keys(zones).length === 0) {
+            zones = await this.homeyApi.zones.getZones();
+        }
+        return zones[zoneId]?.name ?? 'Unknown Zone';
     }
 
 
