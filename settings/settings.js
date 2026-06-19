@@ -160,29 +160,30 @@ function onHomeyReady(homeyReady){
                     }
                 });
             },
-            getDevices() {
-                Homey.api('GET', '/devices', null, (err, result) => {
-                    if (err)
-                        return Homey.alert('getDevices() ' + err);
-                    var array = Object.keys(result).map(function (key) {
-                        return result[key];
+            async getDevices() {
+                const zones = await this.getZones();
+                return new Promise((resolve, reject) => {
+                    Homey.api('GET', '/devices', null, (err, result) => {
+                        if (err) return reject(Homey.alert('getDevices() ' + err));
+                        var array = Object.keys(result).map(function (key) {
+                            var device = result[key];
+                            device.zoneName = zones[device.zone]?.name ?? 'Unknown Zone';
+                            return device;
+                        });
+                        this.devices = array;
+                        resolve(array);
                     });
-                    this.devices = array
                 });
             },
-            /*
-            getZones() {
-                Homey.api('GET', '/zones', null, (err, result) => {
-                    if (err)
-                        return Homey.alert('getZones' + err);
-                    var array = Object.keys(result).map(function (key) {
-                        return result[key];
+            async getZones() {
+                return new Promise((resolve, reject) => {
+                    Homey.api('GET', '/zones', null, (err, result) => {
+                        if (err) return reject(err);
+                        this.zones = result;
+                        resolve(result);
                     });
-                    this.zones = array
-                    return this.zones
                 });
             },
-            */
             /*
             getZoneName: function(zoneId) {
                 var result = "unknown";

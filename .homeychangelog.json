@@ -656,5 +656,16 @@
       "no": "Endring i henting av sonenavn",
       "es": "Cambio en la obtención de los nombres de zonas",
       "sv": "Ändring i hämtning av zonnamn"
-    }
+    },
+     "2.11.0": {
+      "en": "• Updated homey-api to 3.19.1",
+      "da": "• Opdateret homey-api til 3.19.1",
+      "de": "• Homey-API auf 3.19.1 aktualisiert",
+      "fr": "• Mise à jour de homey-api en version 3.19.1",
+      "it": "• Aggiornato homey-api alla versione 3.19.1",
+      "nl": "• homey-api bijgewerkt naar 3.19.1",
+      "no": "• Oppdatert homey-api til 3.19.1",
+      "es": "• Actualizada la homey-api a la versión 3.19.1",
+      "sv": "• Uppdaterat homey-api till version 3.19.1"
+     }    
 }
